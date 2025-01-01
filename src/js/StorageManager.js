@@ -15,5 +15,17 @@ export default function StorageManager() {
         return JSON.parse(localStorage[storageKey])
     }
 
-    return { getStorage }
+    function setStorage(storageKey, updatedStorage) {
+        if (!LOCALSTORAGE_USER_PROPERTIES.includes(storageKey)) {
+            console.error('Invalid storage key')
+            return false
+        }
+        if (typeof updatedStorage !== 'object' || updatedStorage === null) {
+            console.error('Invalid data')
+            return false
+        }
+        localStorage[storageKey] = JSON.stringify(updatedStorage)
+    }
+
+    return { getStorage, setStorage }
 }

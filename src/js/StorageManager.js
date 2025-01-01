@@ -6,4 +6,12 @@ export default function StorageManager() {
             localStorage[storageProperty] = '[]'
         }
     }
+
+    function getStorage(storageKey) {
+        return localStorage[storageKey]
+            ? JSON.parse(localStorage[storageKey])
+            : null
+    }
+
+    return { getStorage }
 }

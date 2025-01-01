@@ -1,0 +1,1 @@
+import StorageManager from './StorageManager'

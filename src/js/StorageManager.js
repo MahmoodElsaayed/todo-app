@@ -1,9 +1,12 @@
 export default function StorageManager() {
     const LOCALSTORAGE_USER_PROPERTIES = ['tasks', 'projects']
-    // ensure that the necessary localStorage properties are initialized if user is new
-    for (let storageProperty of LOCALSTORAGE_USER_PROPERTIES) {
-        if (!localStorage[storageProperty]) {
-            localStorage[storageProperty] = '[]'
+
+    function initializeStorage() {
+        // ensures that the necessary localStorage properties are initialized if user is new
+        for (let storageProperty of LOCALSTORAGE_USER_PROPERTIES) {
+            if (!localStorage[storageProperty]) {
+                localStorage[storageProperty] = '[]'
+            }
         }
     }
 
@@ -26,6 +29,8 @@ export default function StorageManager() {
         }
         localStorage[storageKey] = JSON.stringify(updatedStorage)
     }
+
+    initializeStorage()
 
     return { getStorage, setStorage }
 }

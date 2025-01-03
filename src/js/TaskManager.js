@@ -48,5 +48,11 @@ export default function TaskManager(storageManager, projectManager) {
         return tasks.findIndex((task) => task.key === taskKey)
     }
 
-    return { addTask, updateTaskProperty }
+    function deleteTask(taskKey) {
+        const taskIndex = getTaskIndex(taskKey)
+        tasks.splice(taskIndex, 1)
+        storageManager.setStorage(STORAGE_KEY, tasks)
+    }
+
+    return { addTask, updateTaskProperty, deleteTask }
 }

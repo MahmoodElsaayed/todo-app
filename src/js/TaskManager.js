@@ -38,5 +38,15 @@ export default function TaskManager(storageManager, projectManager) {
         storageManager.setStorage(STORAGE_KEY, tasks)
     }
 
-    return { addTask }
+    function updateTaskProperty(taskKey, targetProperty, newValue) {
+        const taskIndex = getTaskIndex(taskKey)
+        tasks[taskIndex][targetProperty] = newValue
+        storageManager.setStorage(STORAGE_KEY, tasks)
+    }
+
+    function getTaskIndex(taskKey) {
+        return tasks.findIndex((task) => task.key === taskKey)
+    }
+
+    return { addTask, updateTaskProperty }
 }

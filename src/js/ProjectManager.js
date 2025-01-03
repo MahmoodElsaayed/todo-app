@@ -21,5 +21,9 @@ export default function ProjectManager(storageManager) {
         storageManager.setStorage(STORAGE_KEY, projects)
     }
 
-    return { addProject, deleteProject }
+    function getProjects() {
+        return projects
+    }
+
+    return { addProject, deleteProject, getProjects }
 }

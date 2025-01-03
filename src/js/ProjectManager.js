@@ -7,5 +7,17 @@ export default function ProjectManager(storageManager) {
         storageManager.setStorage(STORAGE_KEY, projects)
     }
 
-    return { addProject }
+    function deleteProject(projectTitle) {
+        const projectIndex = projects.findIndex(
+            (project) => project === projectTitle
+        )
+        if (projectIndex === -1) {
+            console.error("Project doesn't exist")
+            return false
+        }
+        projects.splice(projectIndex, 1)
+        storageManager.setStorage(STORAGE_KEY, projects)
+    }
+
+    return { addProject, deleteProject }
 }

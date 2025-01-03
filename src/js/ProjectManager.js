@@ -2,15 +2,17 @@ export default function ProjectManager(storageManager) {
     const STORAGE_KEY = 'projects'
     const projects = storageManager.getStorage(STORAGE_KEY)
 
-    function addProject(projectData) {
-        projects.push(projectData)
+    function addProject(projectTitle) {
+        if (projects.includes(projectTitle)) {
+            console.error('Cannot create duplicate projects')
+            return false
+        }
+        projects.push(projectTitle)
         storageManager.setStorage(STORAGE_KEY, projects)
     }
 
     function deleteProject(projectTitle) {
-        const projectIndex = projects.findIndex(
-            (project) => project === projectTitle
-        )
+        const projectIndex = projects.indexOf(projectTitle)
         if (projectIndex === -1) {
             console.error("Project doesn't exist")
             return false

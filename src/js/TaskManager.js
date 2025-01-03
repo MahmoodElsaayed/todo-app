@@ -31,4 +31,12 @@ export default function TaskManager(storageManager, projectManager) {
             .join('')
             .slice(midPoint - 3, midPoint + 3)
     }
+
+    function addTask(taskData) {
+        const task = Task(taskData)
+        tasks.push(task)
+        storageManager.setStorage(STORAGE_KEY, tasks)
+    }
+
+    return { addTask }
 }

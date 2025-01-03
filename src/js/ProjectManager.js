@@ -1,6 +1,7 @@
 export default function ProjectManager(storageManager) {
     const STORAGE_KEY = 'projects'
     const projects = storageManager.getStorage(STORAGE_KEY)
+    let activeProject = ''
 
     function addProject(projectTitle) {
         if (projects.includes(projectTitle)) {
@@ -25,5 +26,19 @@ export default function ProjectManager(storageManager) {
         return projects
     }
 
-    return { addProject, deleteProject, getProjects }
+    function setActiveProject(selectedProject) {
+        activeProject = selectedProject
+    }
+
+    function getActiveProject() {
+        return activeProject
+    }
+
+    return {
+        addProject,
+        deleteProject,
+        getProjects,
+        setActiveProject,
+        getActiveProject,
+    }
 }

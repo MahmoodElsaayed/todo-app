@@ -17,6 +17,7 @@
 
     --white: #ffffff;
     --black: #000000;
+    --teal-1: #44c6cc;
 }
 
 html {
@@ -29,6 +30,19 @@ body {
     background-color: var(--white);
     display: grid;
     grid-template-rows: 110px 1fr 50px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    color: var(--white);
+    background-color: var(--teal-1);
+}
+
+header h1 {
+    font-size: 4.5rem;
 }
 
 main {

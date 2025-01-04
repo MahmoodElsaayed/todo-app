@@ -73,11 +73,29 @@ a {
     margin-top: 30px;
 }
 
-.user-projects h2 {
+.user-projects h2,
+.project-summary {
     padding-bottom: 10px;
     border-bottom: 1px solid var(--gray);
 }
 
 .sidebar.hidden {
     width: 0;
+}
+
+.task-viewer {
+    display: grid;
+    grid-template: min-content 1fr / 70%;
+    justify-content: center;
+    padding: 40px;
+}
+
+.project-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tasks-container {
+    margin-top: 25px;
 }

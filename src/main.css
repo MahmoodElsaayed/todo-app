@@ -27,4 +27,19 @@ body {
     min-height: 100vh;
     font: normal 1.6rem var(--primary-fonts);
     background-color: var(--white);
+    display: grid;
+    grid-template-rows: 110px 1fr 50px;
+}
+
+main {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.sidebar {
+    width: 300px;
+}
+
+.sidebar.hidden {
+    width: 0;
 }

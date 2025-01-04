@@ -32,7 +32,8 @@ body {
     grid-template-rows: 110px 1fr 50px;
 }
 
-header {
+header,
+footer {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -48,6 +49,16 @@ header h1 {
 main {
     display: grid;
     grid-template-columns: auto 1fr;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+}
+
+a {
+    text-decoration: none;
 }
 
 .sidebar {

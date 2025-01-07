@@ -17,6 +17,7 @@
 
     --white: #ffffff;
     --black: #000000;
+    --red: #f87070;
     --teal: #44c6cc;
     --gray: #cbcbcb;
     --faded-gray: #8080800a;
@@ -73,8 +74,8 @@ a {
     margin-top: 30px;
 }
 
-.user-projects .header,
-.task-viewer .header {
+.user-projects > .header,
+.task-viewer > .header {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -119,4 +120,91 @@ a {
 
 .add.btn:active {
     scale: 0.95;
+}
+
+.modal {
+    width: 500px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    border-radius: 10px;
+    box-shadow:
+        0 4px 8px 0 rgba(0, 0, 0, 0.2),
+        0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.modal .header {
+    height: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--teal);
+    color: var(--white);
+    font: 700 3.5rem var(--primary-fonts);
+}
+
+.modal form {
+    display: grid;
+    gap: 30px;
+    padding: 20px;
+}
+
+form .row:not(.flat) {
+    display: grid;
+    gap: 7px;
+}
+
+form :is(input, select, textarea) {
+    height: 40px;
+    padding: 5px;
+    border: 1px solid var(--gray);
+    border-radius: 3px;
+    font-family: inherit;
+    background-color: var(--white);
+}
+
+form textarea {
+    resize: none;
+    height: 100px;
+}
+
+form input[type='checkbox'] {
+    height: auto;
+    margin-right: 5px;
+    vertical-align: -1px;
+    accent-color: var(--teal);
+}
+
+form .row:last-child {
+    display: grid;
+    grid-template: 50px / 4fr 1fr;
+    gap: 15px;
+}
+
+form :is(.submit.btn, .cancel.btn) {
+    border: none;
+    border-radius: 10px;
+    font: 700 1.6rem var(--primary-fonts);
+    color: var(--white);
+    transition: 0.3s ease;
+}
+
+form .submit.btn {
+    background: url('./assets/images/tick.png') no-repeat center center / 27px
+        27px var(--teal);
+}
+
+form .submit.btn:active {
+    scale: 0.985;
+}
+
+form .cancel.btn {
+    background: url('./assets/images/cancel.png') no-repeat center center / 34px
+        34px var(--red);
+}
+
+form .cancel.btn:active {
+    scale: 0.97;
 }

@@ -42,6 +42,63 @@
                         id="addTaskBtn"
                         title="add task"
                     ></button>
+                    <dialog class="modal" id="addTaskModal">
+                        <div class="header">Create Task</div>
+                        <form method="dialog">
+                            <div class="row">
+                                <label for="title">Title*</label>
+                                <input
+                                    type="text"
+                                    id="title"
+                                    required
+                                    minlength="1"
+                                    pattern=".*\S.*"
+                                    placeholder="Enter a title"
+                                    title="Title must contain at least one non-space character."
+                                />
+                            </div>
+                            <div class="row">
+                                <label for="date">Date</label>
+                                <input type="date" id="date" />
+                            </div>
+                            <div class="row">
+                                <label for="priority">Priority</label>
+                                <select id="priority">
+                                    <option value="" disabled selected>
+                                        --Select Priority--
+                                    </option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <label for="description">Description</label>
+                                <textarea
+                                    id="description"
+                                    placeholder="Enter a description"
+                                ></textarea>
+                            </div>
+                            <div class="row flat">
+                                <input type="checkbox" id="status" />
+                                <label for="status"
+                                    >I already completed this task</label
+                                >
+                            </div>
+                            <div class="row flat">
+                                <button
+                                    type="submit"
+                                    class="submit btn"
+                                    title="create new task"
+                                ></button>
+                                <button
+                                    type="button"
+                                    class="cancel btn"
+                                    title="cancel"
+                                ></button>
+                            </div>
+                        </form>
+                    </dialog>
                 </div>
                 <div class="tasks-container"></div>
             </div>

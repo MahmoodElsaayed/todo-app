@@ -44,7 +44,7 @@
                     ></button>
                     <dialog class="modal" id="addTaskModal">
                         <div class="header">Create Task</div>
-                        <form method="dialog">
+                        <form method="dialog" id="taskCreationForm">
                             <div class="row">
                                 <label for="title">Title*</label>
                                 <input
@@ -80,8 +80,8 @@
                                 ></textarea>
                             </div>
                             <div class="row flat">
-                                <input type="checkbox" id="status" />
-                                <label for="status"
+                                <input type="checkbox" id="isComplete" />
+                                <label for="isComplete"
                                     >I already completed this task</label
                                 >
                             </div>

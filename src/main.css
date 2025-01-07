@@ -73,8 +73,11 @@ a {
     margin-top: 30px;
 }
 
-.user-projects h2,
-.project-summary {
+.user-projects .header,
+.task-viewer .header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid var(--gray);
 }
@@ -85,17 +88,35 @@ a {
 
 .task-viewer {
     display: grid;
-    grid-template: min-content 1fr / 70%;
+    grid-template: min-content 1fr / 60%;
     justify-content: center;
     padding: 40px;
 }
 
-.project-summary {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
 .tasks-container {
     margin-top: 25px;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.add.btn {
+    width: 36px;
+    height: 36px;
+    margin-left: auto;
+    border-radius: 18px;
+    border: none;
+    background: url('./assets/images/add-btn-base.png') no-repeat center center /
+        cover;
+    transition: ease 0.3s;
+    margin-bottom: -5px;
+}
+
+.add.btn:hover {
+    background-image: url('./assets/images/add-btn-hovered.png');
+}
+
+.add.btn:active {
+    scale: 0.95;
 }

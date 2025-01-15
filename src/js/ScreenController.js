@@ -60,6 +60,10 @@ export default function ScreenController(taskManager, projectManager) {
                 event.target.closest('.task').classList.toggle('expanded')
             })
 
+        taskElement
+            .querySelector('.delete-btn')
+            .addEventListener('click', deleteTask)
+
         return taskElement
     }
 
@@ -72,6 +76,12 @@ export default function ScreenController(taskManager, projectManager) {
 
         const taskElement = generateTaskElement(task)
         tasksContainer.appendChild(taskElement)
+    }
+
+    function deleteTask(event) {
+        const taskElement = event.target.closest('.task')
+        taskManager.deleteTask(taskElement.dataset.key)
+        taskElement.remove()
     }
 
     // Open task modal

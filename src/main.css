@@ -17,9 +17,11 @@
 
     --white: #ffffff;
     --black: #000000;
+    --faded-black: #000000b4;
     --red: #f87070;
     --teal: #44c6cc;
-    --gray: #cbcbcb;
+    --faded-teal: #44c5cc1e;
+    --gray: #959595;
     --faded-gray: #8080800a;
 }
 
@@ -33,6 +35,7 @@ body {
     background-color: var(--white);
     display: grid;
     grid-template-rows: 110px 1fr 50px;
+    color: var(--faded-black);
 }
 
 header,
@@ -102,7 +105,7 @@ a {
     cursor: pointer;
 }
 
-.add.btn {
+.add-btn {
     width: 36px;
     height: 36px;
     margin-left: auto;
@@ -114,11 +117,11 @@ a {
     margin-bottom: -5px;
 }
 
-.add.btn:hover {
+.add-btn:hover {
     background-image: url('./assets/images/add-btn-hovered.png');
 }
 
-.add.btn:active {
+.add-btn:active {
     scale: 0.95;
 }
 
@@ -183,7 +186,7 @@ form .row:last-child {
     gap: 15px;
 }
 
-form :is(.submit.btn, .cancel.btn) {
+form :is(.submit-btn, .cancel-btn) {
     border: none;
     border-radius: 10px;
     font: 700 1.6rem var(--primary-fonts);
@@ -191,20 +194,164 @@ form :is(.submit.btn, .cancel.btn) {
     transition: 0.3s ease;
 }
 
-form .submit.btn {
+form .submit-btn {
     background: url('./assets/images/tick.png') no-repeat center center / 27px
         27px var(--teal);
 }
 
-form .submit.btn:active {
+form .submit-btn:active {
     scale: 0.985;
 }
 
-form .cancel.btn {
+form .cancel-btn {
     background: url('./assets/images/cancel.png') no-repeat center center / 34px
         34px var(--red);
 }
 
-form .cancel.btn:active {
+form .cancel-btn:active {
     scale: 0.97;
+}
+
+.task {
+    border-radius: 10px;
+}
+
+.task.expanded {
+    background-color: var(--faded-teal);
+}
+
+.task .main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    font: 400 1.8rem var(--primary-fonts);
+    cursor: alias;
+}
+
+.task .main,
+.task .main > * {
+    transition: 0.3s ease;
+}
+
+.task .main:hover {
+    background-color: var(--faded-teal);
+}
+
+.task .main .complete-task-btn {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--teal);
+    border-radius: 10px;
+    background-color: var(--faded-gray);
+}
+
+.task .main .complete-task-btn.completed {
+    background-color: var(--teal);
+}
+
+.task .main .complete-task-btn.completed ~ p {
+    text-decoration: line-through;
+    color: var(--gray);
+}
+
+.task .main .complete-task-btn.completed::after {
+    content: '✔';
+    display: block;
+    position: absolute;
+    right: 1px;
+    top: -1px;
+    color: var(--white);
+    font-size: 1.6rem;
+}
+
+.task .main .date {
+    margin-left: auto;
+}
+
+.task .main .accordion-btn {
+    border: none;
+    background: url('./assets/images/expand-arrow.png') no-repeat center center /
+        20px 20px;
+}
+
+.task .main:hover .accordion-btn,
+.task.expanded .accordion-btn {
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+}
+
+.task.expanded .accordion-btn {
+    background-image: url('./assets/images/collapse-arrow.png');
+}
+
+.task .panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 50px 30px;
+}
+
+.task.expanded .panel {
+    max-height: none;
+    margin: 10px;
+    padding: 20px 20px 35px 20px;
+    transition: max-height 0.3s ease;
+}
+
+.panel .row {
+    position: relative;
+    margin-left: 25px;
+}
+
+.edit-btn,
+.delete-btn {
+    border: none;
+    background: url('./assets/images/edit.png') no-repeat center center / cover
+        transparent;
+    transition: 0.3s ease;
+}
+
+.edit-btn {
+    position: absolute;
+    left: -24px;
+    top: 2px;
+    width: 15px;
+    height: 15px;
+}
+
+.edit-btn:hover {
+    background-image: url('./assets/images/edit-hovered.png');
+}
+
+.delete-btn {
+    justify-self: end;
+    align-self: end;
+    display: block;
+    width: 29px;
+    height: 30px;
+    background-image: url('./assets/images/trash.png');
+}
+
+.delete-btn:hover {
+    background-image: url('./assets/images/trash-hovered.png');
+}
+
+.panel output {
+    display: block;
+    margin: 10px 0 0 3px;
+}
+
+.panel .description output {
+    max-height: 100px;
+    overflow: auto;
 }

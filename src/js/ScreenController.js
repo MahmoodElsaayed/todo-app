@@ -1,6 +1,8 @@
 export default function ScreenController(taskManager, projectManager) {
     const addTaskBtn = document.querySelector('#addTaskBtn')
     const closeModalBtns = document.querySelectorAll('.cancel.btn')
+    const taskCreationForm = document.querySelector('#taskCreationForm')
+    const tasksContainer = document.querySelector('.tasks-container')
 
     function extractFormData(target) {
         const taskData = {}
@@ -9,35 +11,67 @@ export default function ScreenController(taskManager, projectManager) {
         )
         formFields.forEach((field) => {
             if (field.type === `checkbox`) {
-                field.value = field.checked
+                taskData[field.id] = field.checked
+                return
             }
             taskData[field.id] = field.value
         })
         return taskData
     }
 
-    function generateTaskElement(taskData) {
+    function generateTaskElement(task) {
         const taskTemplate =
             '<div class=task><div class=main><button class="btn complete-task-btn"></button><p class=title><p class=date></p><button class="btn accordion-btn"></button></div><div class=panel><div class="row title"><button class="btn edit-btn"title="edit property"></button><h4>Title</h4><output></output></div><div class="row description"><button class="btn edit-btn"title="edit property"></button><h4>Description</h4><output></output></div><div class="row date"><button class="btn edit-btn"title="edit property"></button><h4>Date</h4><output></output></div><div class="row priority"><button class="btn edit-btn"title="edit property"></button><h4>Priority</h4><output></output></div><div class="row project"><button class="btn edit-btn"title="edit property"></button><h4>Project</h4><output></output></div><button class="btn delete-btn"title="delete task"></button></div></div>'
         const parser = new DOMParser()
         const taskElement = parser.parseFromString(taskTemplate, 'text/html')
             .body.firstChild
+        const unassigned = 'NA/A'
 
-        taskElement.dataset.key = taskData.key
-        taskElement.querySelector('.main .title').textContent = taskData.title
-        taskElement.querySelector('.main .date').textContent = taskData.date
+        taskElement.dataset.key = task.key
+        if (task.isComplete) {
+            taskElement
+                .querySelector('.complete-task-btn')
+                .classList.add('completed')
+        }
+        taskElement.querySelector('.main .title').textContent =
+            task.title || unassigned
+        taskElement.querySelector('.main .date').textContent =
+            task.date || unassigned
         taskElement.querySelector('.panel .title output').textContent =
-            taskData.title
+            task.title || unassigned
         taskElement.querySelector('.panel .description output').textContent =
-            taskData.description
+            task.description || unassigned
         taskElement.querySelector('.panel .date output').textContent =
-            taskData.date
+            task.date || unassigned
         taskElement.querySelector('.panel .priority output').textContent =
-            taskData.priority
+            task.priority || unassigned
         taskElement.querySelector('.panel .project output').textContent =
-            taskData.project
+            task.project || unassigned
+
+        taskElement
+            .querySelector('.complete-task-btn')
+            .addEventListener('click', (event) => {
+                event.target.classList.toggle('completed')
+            })
+
+        taskElement
+            .querySelector('.accordion-btn')
+            .addEventListener('click', (event) => {
+                event.target.closest('.task').classList.toggle('expanded')
+            })
 
         return taskElement
+    }
+
+    function addTask(event) {
+        const taskData = extractFormData(event.target)
+        event.target.reset()
+
+        const task = taskManager.createTask(taskData)
+        taskManager.storeTask(task)
+
+        const taskElement = generateTaskElement(task)
+        tasksContainer.appendChild(taskElement)
     }
 
     // Open task modal
@@ -51,4 +85,6 @@ export default function ScreenController(taskManager, projectManager) {
             btn.closest('dialog').close()
         })
     })
+
+    taskCreationForm.addEventListener('submit', addTask)
 }

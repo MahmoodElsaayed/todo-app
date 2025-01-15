@@ -6,7 +6,7 @@ export default function TaskManager(storageManager, projectManager) {
         return tasks
     }
 
-    function Task(taskData) {
+    function createTask(taskData) {
         const DEFAULT_VALUES = {
             priority: 3,
             isComplete: false,
@@ -36,8 +36,7 @@ export default function TaskManager(storageManager, projectManager) {
             .slice(midPoint - 3, midPoint + 3)
     }
 
-    function addTask(taskData) {
-        const task = Task(taskData)
+    function storeTask(task) {
         tasks.push(task)
         storageManager.setStorage(STORAGE_KEY, tasks)
     }
@@ -58,5 +57,5 @@ export default function TaskManager(storageManager, projectManager) {
         storageManager.setStorage(STORAGE_KEY, tasks)
     }
 
-    return { addTask, updateTaskProperty, deleteTask, getTasks }
+    return { createTask, storeTask, updateTaskProperty, deleteTask, getTasks }
 }

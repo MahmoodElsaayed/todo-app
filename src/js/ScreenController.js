@@ -1,6 +1,6 @@
 export default function ScreenController(taskManager, projectManager) {
     const addTaskBtn = document.querySelector('#addTaskBtn')
-    const closeModalBtns = document.querySelectorAll('.cancel.btn')
+    const closeModalBtns = document.querySelectorAll('.cancel-btn')
     const taskCreationForm = document.querySelector('#taskCreationForm')
     const tasksContainer = document.querySelector('.tasks-container')
 
@@ -84,7 +84,6 @@ export default function ScreenController(taskManager, projectManager) {
         taskElement.remove()
     }
 
-    // Open task modal
     addTaskBtn.addEventListener('click', () => {
         document.querySelector('#addTaskModal').showModal()
     })

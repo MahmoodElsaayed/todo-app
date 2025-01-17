@@ -6,10 +6,10 @@ export default function ScreenController(taskManager, projectManager) {
 
     function extractFormData(target) {
         const taskData = {}
-        const formFields = target.querySelectorAll(
+        const inputFields = target.querySelectorAll(
             ':is(input, select, textarea)'
         )
-        formFields.forEach((field) => {
+        inputFields.forEach((field) => {
             if (field.type === `checkbox`) {
                 taskData[field.id] = field.checked
                 return
@@ -22,7 +22,7 @@ export default function ScreenController(taskManager, projectManager) {
     function generateTaskElement(task) {
         const taskTemplate =
             '<div class=task><div class=main><button class="btn complete-task-btn"></button><p class=title><p class=date></p><button class="btn accordion-btn"></button></div><div class=panel><div class="row title" data-property="title"><button class="btn edit-btn"title="edit property"></button><h4>Title</h4><output></output></div><div class="row description" data-property="description"><button class="btn edit-btn"title="edit property"></button><h4>Description</h4><output></output></div><div class="row date" data-property="date"><button class="btn edit-btn"title="edit property"></button><h4>Date</h4><output></output></div><div class="row priority" data-property="priority"><button class="btn edit-btn"title="edit property"></button><h4>Priority</h4><output></output></div><button class="btn delete-btn"title="delete task"></button></div></div>'
-        const unassigned = 'N/A'
+        const UNASSIGNED_DEFAULT_VAL = 'N/A'
         const taskElement = parseStringToHTML(taskTemplate)
 
         taskElement.dataset.key = task.key
@@ -32,34 +32,38 @@ export default function ScreenController(taskManager, projectManager) {
                 .classList.add('completed')
         }
         taskElement.querySelector('.main .title').textContent =
-            task.title || unassigned
+            task.title || UNASSIGNED_DEFAULT_VAL
         taskElement.querySelector('.main .date').textContent =
-            task.date || unassigned
+            task.date || UNASSIGNED_DEFAULT_VAL
         taskElement.querySelector('.panel .title output').textContent =
-            task.title || unassigned
+            task.title || UNASSIGNED_DEFAULT_VAL
         taskElement.querySelector('.panel .description output').textContent =
-            task.description || unassigned
+            task.description || UNASSIGNED_DEFAULT_VAL
         taskElement.querySelector('.panel .date output').textContent =
-            task.date || unassigned
+            task.date || UNASSIGNED_DEFAULT_VAL
         taskElement.querySelector('.panel .priority output').textContent =
-            task.priority || unassigned
+            task.priority || UNASSIGNED_DEFAULT_VAL
 
+        // toggle task completion listener
         taskElement
             .querySelector('.complete-task-btn')
             .addEventListener('click', (event) => {
                 event.target.classList.toggle('completed')
             })
 
+        // toggle task accordion listener
         taskElement
             .querySelector('.accordion-btn')
             .addEventListener('click', (event) => {
                 event.target.closest('.task').classList.toggle('expanded')
             })
 
+        // task deletion listener
         taskElement
             .querySelector('.delete-btn')
             .addEventListener('click', deleteTask)
 
+        // property editing listner
         taskElement
             .querySelectorAll('.edit-btn')
             .forEach((btn) => btn.addEventListener('click', openPropertyEditor))
@@ -69,7 +73,7 @@ export default function ScreenController(taskManager, projectManager) {
 
     function addTask(event) {
         const taskData = extractFormData(event.target)
-        event.target.reset()
+        event.target.reset() // reset submitted form
 
         const task = taskManager.createTask(taskData)
         taskManager.storeTask(task)
@@ -104,6 +108,7 @@ export default function ScreenController(taskManager, projectManager) {
         `
         const formElement = parseStringToHTML(editingFormTemplate)
 
+        // close editor listener
         formElement
             .querySelector('.cancel-btn')
             .addEventListener('click', closePropertyEditor)
@@ -113,7 +118,10 @@ export default function ScreenController(taskManager, projectManager) {
 
     function openPropertyEditor(event) {
         const propertyContainer = event.target.parentElement
-        if (propertyContainer.querySelector('.editing-form')) return // exit if editor is already open
+        // exit if editor is already open
+        if (propertyContainer.querySelector('.editing-form')) {
+            return
+        }
         const outputElement = propertyContainer.querySelector('output')
         const formElement = generatePropertyEditor(
             propertyContainer.dataset.property
@@ -136,7 +144,7 @@ export default function ScreenController(taskManager, projectManager) {
         document.querySelector('#addTaskModal').showModal()
     })
 
-    // Close any open modal (without resetting)
+    // close modal (without resetting) listener
     closeModalBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
             btn.closest('dialog').close()

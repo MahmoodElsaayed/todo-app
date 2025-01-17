@@ -103,6 +103,11 @@ export default function ScreenController(taskManager, projectManager) {
             <form method="dialog" class="editing-form">${inputFields[property]}<div class="row flat"><button type="submit" class="submit-btn btn" title="edit task"></button><button type="button" class="cancel-btn btn" title="cancel"></button></div></form>
         `
         const formElement = parseStringToHTML(editingFormTemplate)
+
+        formElement
+            .querySelector('.cancel-btn')
+            .addEventListener('click', closePropertyEditor)
+
         return formElement
     }
 
@@ -119,7 +124,12 @@ export default function ScreenController(taskManager, projectManager) {
     }
 
     function closePropertyEditor(event) {
-        const propertyContainer = event.target.closest('div[ ')
+        const propertyContainer = event.target.closest('div[data-property]')
+        const outputElement = propertyContainer.querySelector('output')
+        const propertyEditor = propertyContainer.querySelector('.editing-form')
+
+        outputElement.style.display = 'block'
+        propertyEditor.remove()
     }
 
     addTaskBtn.addEventListener('click', () => {

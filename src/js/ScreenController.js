@@ -1,6 +1,6 @@
 export default function ScreenController(taskManager, projectManager) {
     const addTaskBtn = document.querySelector('#addTaskBtn')
-    const closeModalBtns = document.querySelectorAll('.cancel-btn')
+    const closeModalBtns = document.querySelectorAll('dialog .cancel-btn')
     const taskCreationForm = document.querySelector('#taskCreationForm')
     const tasksContainer = document.querySelector('.tasks-container')
 
@@ -22,10 +22,8 @@ export default function ScreenController(taskManager, projectManager) {
     function generateTaskElement(task) {
         const taskTemplate =
             '<div class=task><div class=main><button class="btn complete-task-btn"></button><p class=title><p class=date></p><button class="btn accordion-btn"></button></div><div class=panel><div class="row title"><button class="btn edit-btn"title="edit property"></button><h4>Title</h4><output></output></div><div class="row description"><button class="btn edit-btn"title="edit property"></button><h4>Description</h4><output></output></div><div class="row date"><button class="btn edit-btn"title="edit property"></button><h4>Date</h4><output></output></div><div class="row priority"><button class="btn edit-btn"title="edit property"></button><h4>Priority</h4><output></output></div><div class="row project"><button class="btn edit-btn"title="edit property"></button><h4>Project</h4><output></output></div><button class="btn delete-btn"title="delete task"></button></div></div>'
-        const parser = new DOMParser()
-        const taskElement = parser.parseFromString(taskTemplate, 'text/html')
-            .body.firstChild
-        const unassigned = 'NA/A'
+        const unassigned = 'N/A'
+        const taskElement = parseStringToHTML(taskTemplate)
 
         taskElement.dataset.key = task.key
         if (task.isComplete) {
@@ -82,6 +80,12 @@ export default function ScreenController(taskManager, projectManager) {
         const taskElement = event.target.closest('.task')
         taskManager.deleteTask(taskElement.dataset.key)
         taskElement.remove()
+    }
+
+    function parseStringToHTML(stringTemplate) {
+        const parser = new DOMParser()
+        const doc = parser.parseFromString(stringTemplate, 'text/html')
+        return doc.body.firstChild
     }
 
     addTaskBtn.addEventListener('click', () => {

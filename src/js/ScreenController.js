@@ -90,14 +90,7 @@ export default function ScreenController(taskManager, projectManager) {
         return doc.body.firstChild
     }
 
-    function openPropertyEditor(event) {
-        const propertyContainer = event.target.parentElement
-        // exit if editor is already open
-        if (propertyContainer.querySelector('.editing-form')) {
-            return
-        }
-        const propertyName = propertyContainer.dataset.property
-        const outputElement = propertyContainer.querySelector('output')
+    function generatePropertyEditor(property) {
         const inputFields = {
             title: '<input type="text" id="title" required minlength="1" pattern=".*S.*" placeholder="Enter a title" title="Title must contain at least one non-space character."/>',
             date: '<input type="date" id="date" />',
@@ -107,12 +100,26 @@ export default function ScreenController(taskManager, projectManager) {
                 '<textarea id="description"placeholder="Enter a description"></textarea>',
         }
         const editingFormTemplate = `
-            <form method="dialog" class="editing-form">${inputFields[propertyName]}<div class="row flat"><button type="submit" class="submit-btn btn" title="edit task"></button><button type="button" class="cancel-btn btn" title="cancel"></button></div></form>
+            <form method="dialog" class="editing-form">${inputFields[property]}<div class="row flat"><button type="submit" class="submit-btn btn" title="edit task"></button><button type="button" class="cancel-btn btn" title="cancel"></button></div></form>
         `
         const formElement = parseStringToHTML(editingFormTemplate)
+        return formElement
+    }
+
+    function openPropertyEditor(event) {
+        const propertyContainer = event.target.parentElement
+        if (propertyContainer.querySelector('.editing-form')) return // exit if editor is already open
+        const outputElement = propertyContainer.querySelector('output')
+        const formElement = generatePropertyEditor(
+            propertyContainer.dataset.property
+        )
 
         outputElement.style.display = 'none'
         propertyContainer.appendChild(formElement)
+    }
+
+    function closePropertyEditor(event) {
+        const propertyContainer = event.target.closest('div[ ')
     }
 
     addTaskBtn.addEventListener('click', () => {

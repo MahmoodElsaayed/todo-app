@@ -21,7 +21,7 @@ export default function ScreenController(taskManager, projectManager) {
 
     function generateTaskElement(task) {
         const taskTemplate =
-            '<div class=task><div class=main><button class="btn complete-task-btn"></button><p class=title><p class=date></p><button class="btn accordion-btn"></button></div><div class=panel><div class="row title"><button class="btn edit-btn"title="edit property"></button><h4>Title</h4><output></output></div><div class="row description"><button class="btn edit-btn"title="edit property"></button><h4>Description</h4><output></output></div><div class="row date"><button class="btn edit-btn"title="edit property"></button><h4>Date</h4><output></output></div><div class="row priority"><button class="btn edit-btn"title="edit property"></button><h4>Priority</h4><output></output></div><div class="row project"><button class="btn edit-btn"title="edit property"></button><h4>Project</h4><output></output></div><button class="btn delete-btn"title="delete task"></button></div></div>'
+            '<div class=task><div class=main><button class="btn complete-task-btn"></button><p class=title><p class=date></p><button class="btn accordion-btn"></button></div><div class=panel><div class="row title" data-property="title"><button class="btn edit-btn"title="edit property"></button><h4>Title</h4><output></output></div><div class="row description" data-property="description"><button class="btn edit-btn"title="edit property"></button><h4>Description</h4><output></output></div><div class="row date" data-property="date"><button class="btn edit-btn"title="edit property"></button><h4>Date</h4><output></output></div><div class="row priority" data-property="priority"><button class="btn edit-btn"title="edit property"></button><h4>Priority</h4><output></output></div><button class="btn delete-btn"title="delete task"></button></div></div>'
         const unassigned = 'N/A'
         const taskElement = parseStringToHTML(taskTemplate)
 
@@ -43,8 +43,6 @@ export default function ScreenController(taskManager, projectManager) {
             task.date || unassigned
         taskElement.querySelector('.panel .priority output').textContent =
             task.priority || unassigned
-        taskElement.querySelector('.panel .project output').textContent =
-            task.project || unassigned
 
         taskElement
             .querySelector('.complete-task-btn')

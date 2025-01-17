@@ -60,6 +60,10 @@ export default function ScreenController(taskManager, projectManager) {
             .querySelector('.delete-btn')
             .addEventListener('click', deleteTask)
 
+        taskElement
+            .querySelectorAll('.edit-btn')
+            .forEach((btn) => btn.addEventListener('click', openPropertyEditor))
+
         return taskElement
     }
 
@@ -84,6 +88,31 @@ export default function ScreenController(taskManager, projectManager) {
         const parser = new DOMParser()
         const doc = parser.parseFromString(stringTemplate, 'text/html')
         return doc.body.firstChild
+    }
+
+    function openPropertyEditor(event) {
+        const propertyContainer = event.target.parentElement
+        // exit if editor is already open
+        if (propertyContainer.querySelector('.editing-form')) {
+            return
+        }
+        const propertyName = propertyContainer.dataset.property
+        const outputElement = propertyContainer.querySelector('output')
+        const inputFields = {
+            title: '<input type="text" id="title" required minlength="1" pattern=".*S.*" placeholder="Enter a title" title="Title must contain at least one non-space character."/>',
+            date: '<input type="date" id="date" />',
+            priority:
+                '<select id="priority"><option value="" disabled selected>--Select Priority--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>',
+            description:
+                '<textarea id="description"placeholder="Enter a description"></textarea>',
+        }
+        const editingFormTemplate = `
+            <form method="dialog" class="editing-form">${inputFields[propertyName]}<div class="row flat"><button type="submit" class="submit-btn btn" title="edit task"></button><button type="button" class="cancel-btn btn" title="cancel"></button></div></form>
+        `
+        const formElement = parseStringToHTML(editingFormTemplate)
+
+        outputElement.style.display = 'none'
+        propertyContainer.appendChild(formElement)
     }
 
     addTaskBtn.addEventListener('click', () => {

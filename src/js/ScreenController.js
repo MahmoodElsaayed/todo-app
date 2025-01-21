@@ -47,9 +47,7 @@ export default function ScreenController(taskManager, projectManager) {
         // toggle task completion listener
         taskElement
             .querySelector('.complete-task-btn')
-            .addEventListener('click', (event) => {
-                event.target.classList.toggle('completed')
-            })
+            .addEventListener('click', toggleTaskStatus)
 
         // toggle task accordion listener
         taskElement
@@ -113,6 +111,12 @@ export default function ScreenController(taskManager, projectManager) {
             .querySelector('.cancel-btn')
             .addEventListener('click', closePropertyEditor)
 
+        // submit task-editor listener
+        formElement.addEventListener('submit', (event) => {
+            event.preventDefault()
+            updateTaskProperty(event)
+        })
+
         return formElement
     }
 
@@ -138,6 +142,47 @@ export default function ScreenController(taskManager, projectManager) {
 
         outputElement.style.display = 'block'
         propertyEditor.remove()
+    }
+
+    function updateTaskProperty(event) {
+        const [propertyName, newValue] = Object.entries(
+            extractFormData(event.target)
+        )[0]
+        const taskElement = event.target.closest('.task')
+        const outputElement = event.target.previousSibling
+
+        taskManager.updateTaskProperty(
+            taskElement.dataset.key,
+            propertyName,
+            newValue
+        )
+        outputElement.textContent = newValue
+
+        // ensures that the .task.main text reflects the same changes as the output fields
+        if (propertyName === 'title') {
+            const mainTitle = taskElement.querySelector('.main .title')
+            mainTitle.textContent = newValue
+        }
+        if (propertyName === 'date') {
+            const mainDate = taskElement.querySelector('.main .date')
+            mainDate.textContent = newValue
+        }
+
+        closePropertyEditor(event)
+    }
+
+    function toggleTaskStatus(event) {
+        const STATUS_PROPERTY_NAME = 'isComplete'
+        const taskKey = event.target.closest('.task').dataset.key
+        const task = taskManager.getTaskByKey(taskKey)
+
+        taskManager.updateTaskProperty(
+            taskKey,
+            STATUS_PROPERTY_NAME,
+            !task.isComplete
+        )
+
+        event.target.classList.toggle('completed')
     }
 
     addTaskBtn.addEventListener('click', () => {

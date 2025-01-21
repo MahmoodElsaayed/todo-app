@@ -96,19 +96,19 @@ export default function ScreenController(taskManager, projectManager) {
 
     function generatePropertyEditor(property) {
         const inputFields = {
-            title: '<input type="text" id="title" required minlength="1" pattern=".*S.*" placeholder="Enter a title" title="Title must contain at least one non-space character."/>',
-            date: '<input type="date" id="date" />',
+            title: '<input type="text" id="title" required minlength="1" pattern=".*\\S.*" placeholder="Enter a title" title="Title must contain at least one non-space character."/>',
+            date: '<input type="date" id="date" required />',
             priority:
-                '<select id="priority"><option value="" disabled selected>--Select Priority--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>',
+                '<select id="priority" required><option value="" disabled selected>--Select Priority--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>',
             description:
-                '<textarea id="description"placeholder="Enter a description"></textarea>',
+                '<textarea id="description"placeholder="Enter a description" required></textarea>',
         }
         const editingFormTemplate = `
-            <form method="dialog" class="editing-form">${inputFields[property]}<div class="row flat"><button type="submit" class="submit-btn btn" title="edit task"></button><button type="button" class="cancel-btn btn" title="cancel"></button></div></form>
+            <form class="editing-form">${inputFields[property]}<div class="row flat"><button type="submit" class="submit-btn btn" title="edit task"></button><button type="button" class="cancel-btn btn" title="cancel"></button></div></form>
         `
         const formElement = parseStringToHTML(editingFormTemplate)
 
-        // close editor listener
+        // close task-editor listener
         formElement
             .querySelector('.cancel-btn')
             .addEventListener('click', closePropertyEditor)

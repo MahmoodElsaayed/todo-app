@@ -6,6 +6,10 @@ export default function TaskManager(storageManager, projectManager) {
         return tasks
     }
 
+    function getTaskByKey(taskKey) {
+        return tasks[getTaskIndex(taskKey)]
+    }
+
     function createTask(taskData) {
         const DEFAULT_VALUES = {
             priority: 3,
@@ -57,5 +61,12 @@ export default function TaskManager(storageManager, projectManager) {
         storageManager.setStorage(STORAGE_KEY, tasks)
     }
 
-    return { createTask, storeTask, updateTaskProperty, deleteTask, getTasks }
+    return {
+        createTask,
+        storeTask,
+        updateTaskProperty,
+        deleteTask,
+        getTasks,
+        getTaskByKey,
+    }
 }

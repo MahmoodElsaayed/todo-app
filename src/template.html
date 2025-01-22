@@ -30,6 +30,35 @@
                             id="addProjectBtn"
                             title="add project"
                         ></button>
+                        <dialog class="modal" id="addProjectModal">
+                            <div class="header">Add Project</div>
+                            <form method="dialog" id="projectCreationForm">
+                                <div class="row">
+                                    <label for="title">Project Title*</label>
+                                    <input
+                                        type="text"
+                                        id="title"
+                                        required
+                                        minlength="1"
+                                        pattern=".*\S.*"
+                                        placeholder="Enter a title"
+                                        title="Title must contain at least one non-space character."
+                                    />
+                                </div>
+                                <div class="row flat">
+                                    <button
+                                        type="submit"
+                                        class="submit-btn btn"
+                                        title="create new task"
+                                    ></button>
+                                    <button
+                                        type="button"
+                                        class="cancel-btn btn"
+                                        title="cancel"
+                                    ></button>
+                                </div>
+                            </form>
+                        </dialog>
                     </div>
                 </div>
             </div>

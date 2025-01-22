@@ -1,5 +1,6 @@
 export default function ScreenController(taskManager, projectManager) {
     const addTaskBtn = document.querySelector('#addTaskBtn')
+    const addProjectBtn = document.querySelector('#addProjectBtn')
     const closeModalBtns = document.querySelectorAll('dialog .cancel-btn')
     const taskCreationForm = document.querySelector('#taskCreationForm')
     const tasksContainer = document.querySelector('.tasks-container')
@@ -189,9 +190,13 @@ export default function ScreenController(taskManager, projectManager) {
         document.querySelector('#addTaskModal').showModal()
     })
 
-    // close modal (without resetting) listener
+    addProjectBtn.addEventListener('click', () => {
+        document.querySelector('#addProjectModal').showModal()
+    })
+
     closeModalBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
+            // close modal without resetting
             btn.closest('dialog').close()
         })
     })

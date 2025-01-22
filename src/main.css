@@ -74,7 +74,7 @@ a {
 }
 
 .sidebar > * {
-    margin-top: 30px;
+    margin-top: 25px;
 }
 
 .user-projects > .header,
@@ -83,6 +83,7 @@ a {
     align-items: center;
     gap: 10px;
     padding-bottom: 10px;
+    margin-bottom: 15px;
     border-bottom: 1px solid var(--gray);
 }
 
@@ -95,10 +96,6 @@ a {
     grid-template: min-content 1fr / 60%;
     justify-content: center;
     padding: 40px;
-}
-
-.tasks-container {
-    margin-top: 25px;
 }
 
 .btn {
@@ -214,7 +211,8 @@ form .cancel-btn:active {
     scale: 0.97;
 }
 
-.task {
+.task,
+.project {
     border-radius: 10px;
 }
 
@@ -222,7 +220,8 @@ form .cancel-btn:active {
     background-color: var(--faded-teal);
 }
 
-.task .main {
+.task .main,
+.project {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -235,11 +234,14 @@ form .cancel-btn:active {
 }
 
 .task .main,
-.task .main > * {
+.task .main > *,
+.project,
+.project > * {
     transition: 0.3s ease;
 }
 
-.task .main:hover {
+.task .main:hover,
+.project:hover {
     background-color: var(--faded-teal);
 }
 
@@ -368,4 +370,50 @@ form .cancel-btn:active {
 .editing-form .row.flat {
     display: grid;
     gap: 10px;
+}
+
+.project {
+    cursor: pointer;
+}
+
+.project.active {
+    background-color: var(--faded-teal);
+}
+
+.project .project-icon {
+    width: 22px;
+    height: 22px;
+    background: no-repeat center center / cover;
+    margin-bottom: -2px;
+}
+
+.project[data-filter='day'] .project-icon {
+    background-image: url('./assets/images/calendar-day.png');
+}
+
+.project[data-filter='week'] .project-icon {
+    background-image: url('./assets/images/calendar-week.png');
+}
+
+.project[data-filter='all'] .project-icon {
+    background-image: url('./assets/images/inbox.png');
+}
+
+.user-projects .project .project-icon {
+    width: 20px;
+    height: 20px;
+    background-image: url(./assets/images/hash.png);
+}
+
+.project .delete-btn {
+    display: none;
+    position: static;
+    margin-left: auto;
+    margin-bottom: -2px;
+    width: 20px;
+    height: 20px;
+}
+
+.project:hover .delete-btn {
+    display: block;
 }

@@ -232,4 +232,26 @@ export default function ScreenController(taskManager, projectManager) {
     taskCreationForm.addEventListener('submit', addTask)
 
     projectCreationForm.addEventListener('submit', addProject)
+
+    // Load projects
+    document.addEventListener('DOMContentLoaded', () => {
+        const DEFAULT_PROJECTS = ['day', 'week', 'all']
+        const userProjects = projectManager.getProjects()
+
+        const defaultProjectContainer =
+            document.querySelector('.default-projects')
+        const userProjectsContainer = document.querySelector('.user-projects')
+
+        DEFAULT_PROJECTS.forEach((project) => {
+            defaultProjectContainer.appendChild(
+                generateProjectElement('default', project)
+            )
+        })
+
+        userProjects.forEach((project) => {
+            userProjectsContainer.appendChild(
+                generateProjectElement('user', project)
+            )
+        })
+    })
 }

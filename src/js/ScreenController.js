@@ -186,6 +186,17 @@ export default function ScreenController(taskManager, projectManager) {
         event.target.classList.toggle('completed')
     }
 
+    function generateProjectElement(type, project) {
+        project = project.toLowerCase()
+        const projectTemplate = {
+            default: `<div class="project" data-filter="${project}"><div class="project-icon"></div><p class="project-title">${project[0].toUpperCase() + project.slice(1)}</p></div>`,
+
+            user: `<div class="project" data-filter="${project}"><div class="project-icon"></div><p class="project-title">${project[0].toUpperCase() + project.slice(1)}</p><button class="btn delete-btn"></button></div>`,
+        }
+        const projectElement = parseStringToHTML(projectTemplate[type])
+        return projectElement
+    }
+
     addTaskBtn.addEventListener('click', () => {
         document.querySelector('#addTaskModal').showModal()
     })

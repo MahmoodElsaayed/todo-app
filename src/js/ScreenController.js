@@ -3,6 +3,7 @@ export default function ScreenController(taskManager, projectManager) {
     const addProjectBtn = document.querySelector('#addProjectBtn')
     const closeModalBtns = document.querySelectorAll('dialog .cancel-btn')
     const taskCreationForm = document.querySelector('#taskCreationForm')
+    const projectCreationForm = document.querySelector('#projectCreationForm')
     const tasksContainer = document.querySelector('.tasks-container')
 
     function extractFormData(target) {
@@ -197,6 +198,22 @@ export default function ScreenController(taskManager, projectManager) {
         return projectElement
     }
 
+    function addProject(event) {
+        const PROJECT_TYPE = 'user'
+        const projectData = extractFormData(event.target)
+
+        event.target.reset()
+        projectManager.addProject(projectData.title)
+
+        const projectElement = generateProjectElement(
+            PROJECT_TYPE,
+            projectData.title
+        )
+        const userProjectsContainer = document.querySelector('.user-projects')
+
+        userProjectsContainer.appendChild(projectElement)
+    }
+
     addTaskBtn.addEventListener('click', () => {
         document.querySelector('#addTaskModal').showModal()
     })
@@ -213,4 +230,6 @@ export default function ScreenController(taskManager, projectManager) {
     })
 
     taskCreationForm.addEventListener('submit', addTask)
+
+    projectCreationForm.addEventListener('submit', addProject)
 }

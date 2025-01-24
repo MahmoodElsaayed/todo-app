@@ -204,6 +204,10 @@ export default function ScreenController(taskManager, projectManager) {
                 .addEventListener('click', deleteProject)
         }
 
+        projectElement.addEventListener('click', (event) => {
+            runProjectFilter(event.target.dataset.filter)
+        })
+
         return projectElement
     }
 
@@ -229,6 +233,24 @@ export default function ScreenController(taskManager, projectManager) {
 
         projectManager.deleteProject(projectTitle)
         projectElement.remove()
+
+        runProjectFilter() // switch to default project
+    }
+
+    function runProjectFilter(project = 'day') {
+        projectManager.setActiveProject(project)
+
+        const filteredTasks = projectManager.filterTasksByProject()
+        const tasksContainer = document.querySelector('.tasks-container')
+
+        tasksContainer.textContent = ''
+        filteredTasks.forEach((task) => {
+            const taskElement = generateTaskElement(task)
+            document.querySelector('.tasks-container').appendChild(taskElement)
+        })
+
+        document.querySelector('.task-viewer .header h2').textContent =
+            project[0].toUpperCase() + project.slice(1)
     }
 
     addTaskBtn.addEventListener('click', () => {
@@ -271,4 +293,6 @@ export default function ScreenController(taskManager, projectManager) {
             )
         })
     })
+
+    runProjectFilter() // initial render
 }

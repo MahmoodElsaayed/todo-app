@@ -188,6 +188,7 @@ export default function ScreenController(taskManager, projectManager) {
     }
 
     function generateProjectElement(type, project) {
+        const USER_PROJECT_TYPE = 'user'
         project = project.toLowerCase()
         const projectTemplate = {
             default: `<div class="project" data-filter="${project}"><div class="project-icon"></div><p class="project-title">${project[0].toUpperCase() + project.slice(1)}</p></div>`,
@@ -195,6 +196,14 @@ export default function ScreenController(taskManager, projectManager) {
             user: `<div class="project" data-filter="${project}"><div class="project-icon"></div><p class="project-title">${project[0].toUpperCase() + project.slice(1)}</p><button class="btn delete-btn"></button></div>`,
         }
         const projectElement = parseStringToHTML(projectTemplate[type])
+
+        if (type === USER_PROJECT_TYPE) {
+            // delete project listener
+            projectElement
+                .querySelector('.delete-btn')
+                .addEventListener('click', deleteProject)
+        }
+
         return projectElement
     }
 
@@ -212,6 +221,14 @@ export default function ScreenController(taskManager, projectManager) {
         const userProjectsContainer = document.querySelector('.user-projects')
 
         userProjectsContainer.appendChild(projectElement)
+    }
+
+    function deleteProject(event) {
+        const projectElement = event.target.closest('.project')
+        const projectTitle = projectElement.dataset.filter
+
+        projectManager.deleteProject(projectTitle)
+        projectElement.remove()
     }
 
     addTaskBtn.addEventListener('click', () => {

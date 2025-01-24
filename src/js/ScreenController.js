@@ -205,7 +205,8 @@ export default function ScreenController(taskManager, projectManager) {
         }
 
         projectElement.addEventListener('click', (event) => {
-            runProjectFilter(event.target.dataset.filter)
+            const project = event.target.closest('.project')
+            runProjectFilter(project.dataset.filter)
         })
 
         return projectElement

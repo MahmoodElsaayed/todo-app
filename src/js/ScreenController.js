@@ -205,6 +205,10 @@ export default function ScreenController(taskManager, projectManager) {
         }
 
         projectElement.addEventListener('click', (event) => {
+            // exit if .delete-btn (child) is clicked
+            if (event.target === projectElement.querySelector('.delete-btn')) {
+                return
+            }
             const project = event.target.closest('.project')
             runProjectFilter(project.dataset.filter)
         })

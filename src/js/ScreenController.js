@@ -238,15 +238,23 @@ export default function ScreenController(taskManager, projectManager) {
     }
 
     function runProjectFilter(project = 'day') {
-        projectManager.setActiveProject(project)
+        const DEFAULT_PROJECTS = ['day', 'week', 'all']
 
+        // hide the addTaskBtn if default project is active
+        if (DEFAULT_PROJECTS.includes(project)) {
+            addTaskBtn.style.display = 'none'
+        } else {
+            addTaskBtn.style.display = 'block'
+        }
+
+        projectManager.setActiveProject(project)
         const filteredTasks = projectManager.filterTasksByProject()
         const tasksContainer = document.querySelector('.tasks-container')
-
         tasksContainer.textContent = ''
+
         filteredTasks.forEach((task) => {
             const taskElement = generateTaskElement(task)
-            document.querySelector('.tasks-container').appendChild(taskElement)
+            tasksContainer.appendChild(taskElement)
         })
 
         document.querySelector('.task-viewer .header h2').textContent =

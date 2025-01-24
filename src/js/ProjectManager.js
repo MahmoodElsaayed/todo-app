@@ -6,6 +6,7 @@ export default function ProjectManager(storageManager) {
     let activeProject = 'day' // Default startup value
 
     function addProject(projectTitle) {
+        projectTitle = projectTitle.toLowerCase()
         if (projects.includes(projectTitle)) {
             console.error('Cannot create duplicate projects')
             return false
@@ -15,6 +16,9 @@ export default function ProjectManager(storageManager) {
     }
 
     function deleteProject(projectTitle) {
+        const TASKS_STORAGE_KEY = 'tasks'
+        const DEFAULT_FILTER = 'day'
+        // delete the project
         const projectIndex = projects.indexOf(projectTitle)
         if (projectIndex === -1) {
             console.error("Project doesn't exist")
@@ -22,6 +26,15 @@ export default function ProjectManager(storageManager) {
         }
         projects.splice(projectIndex, 1)
         storageManager.setStorage(STORAGE_KEY, projects)
+
+        // delete the project's tasks
+        const updatedTasks = storageManager
+            .getStorage(TASKS_STORAGE_KEY)
+            .filter((task) => task.project !== projectTitle)
+        storageManager.setStorage(TASKS_STORAGE_KEY, updatedTasks)
+
+        // switch to default project
+        setActiveProject(DEFAULT_FILTER)
     }
 
     function getProjects() {

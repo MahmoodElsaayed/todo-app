@@ -9,4 +9,4 @@
 
 ## Live Preview
 
-- You can try the calculator online by visiting the [live preview](https://mahmoodelsaayed.github.io/Todo-App).
+- You can try the app by visiting the [live preview](https://mahmoodelsaayed.github.io/Todo-App).

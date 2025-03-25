@@ -1,4 +1,4 @@
-# Todo-App
+# todo-app
 
 - A simple to-do list application with the following features:  
   - **Task Management**: Users can create, edit, and delete tasks.  
@@ -9,4 +9,4 @@
 
 ## Live Preview
 
-- You can try the app by visiting the [live preview](https://mahmoodelsaayed.github.io/Todo-App).
+- You can try the app by visiting the [live preview](https://mahmoodelsaayed.github.io/todo-app).
